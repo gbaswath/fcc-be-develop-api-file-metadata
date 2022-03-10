@@ -21,8 +21,12 @@ app.listen(port, function () {
 
 //File Analyser Post Call
 app.post("/api/fileanalyse", upload.single('upfile'), function (req, res) {
-  console.log("Got Request File" + JSON.stringify(req.file));
+  console.log("Got Request File " + JSON.stringify(req.file));
   console.log("Got Request Body " + JSON.stringify(req.body));
+  if(req.file == null || req.file == undefined) {
+    res.json({"Error Reason" : "Invalid File to Upload"});
+    return;
+  }
   const fileName = req.file.originalname;
   console.log("Got File Name " + fileName);
   const fileType = req.file.mimetype;
